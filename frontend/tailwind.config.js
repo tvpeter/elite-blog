@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         purple: "#6246EA",
         dark: "#001858",
+        "app-black": "#2B2C34",
       },
     },
   },
