@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Nav from "./nav";
 import Footer from "./footer";
 import { convertToHTML } from "draft-convert";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { convertFromRaw } from "draft-js";
 import DOMPurify from "dompurify";
 
 export default function Blog(props) {
