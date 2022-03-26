@@ -5,6 +5,8 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import BlogPreview from "./blog-preview";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const [editorState, setEditorState] = useState(() =>
@@ -19,13 +21,34 @@ export default function CreatePost() {
   };
 
   function previewHandler() {
-    console.log("Happy");
     setCurrentStep("preview");
   }
 
   const coverImageHandler = (e) => {
     setCoverImage(URL.createObjectURL(e.target.files[0]));
   };
+  let navigate = useNavigate();
+
+  const submitBlog = (e) => {
+    e.preventDefault();
+    const rawData = JSON.stringify(
+      convertToRaw(editorState.getCurrentContent())
+    );
+    const data = {
+      title: title,
+      cover: coverImage,
+      content: rawData,
+    };
+    localStorage.setItem("blog", JSON.stringify(data));
+    Swal.fire({
+      icon: "success",
+      title: `Blog Submitted Successfully`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/dashboard");
+  };
+
   return (
     <div>
       {currentStep === "preview" && (
@@ -49,7 +72,7 @@ export default function CreatePost() {
               </p>
             </div>
             <div className="">
-              <form>
+              <form onSubmit={submitBlog}>
                 <div className="flex flex-col">
                   <label className="text-lg font-medium">Blog Title</label>
                   <input
