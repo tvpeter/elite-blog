@@ -1,7 +1,9 @@
-import Home from "./pages/home";
+// import Home from "./pages/home";
+import DashboardPage from "./pages/dashboard";
 
 function App() {
-  return <Home />;
+  // return <Home />;
+  return <DashboardPage />;
 }
 
 export default App;
