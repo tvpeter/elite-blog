@@ -3,7 +3,7 @@ import Nav from "../components/nav";
 import Hero from "../asset/images/hero.svg";
 import Line from "../asset/images/line.svg";
 import CaretRight from "../asset/images/caret-right.svg";
-import BlogPreview from "../components/blog-preview";
+import BlogCard from "../components/blog-card";
 import Footer from "../components/footer";
 
 const Blog = [
@@ -64,7 +64,7 @@ export default function Home() {
         </div>
         <div className="flex flex-wrap justify-between">
           {Blog.map((blog, index) => (
-            <BlogPreview key={index} />
+            <BlogCard key={index} />
           ))}
         </div>
       </div>

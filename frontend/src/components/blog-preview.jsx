@@ -1,37 +1,58 @@
-import React from "react";
-import Article_Image from "../asset/images/Article_Image.png";
-import Author from "../asset/images/author.png";
+import React, { useState, useEffect } from "react";
+import { convertToHTML } from "draft-convert";
+import DOMPurify from "dompurify";
 
-export default function BlogPreview() {
+export default function BlogPreview(props) {
+  const [convertedContent, setConvertedContent] = useState(null);
+  useEffect(() => {
+    setConvertedContent(convertToHTML(props.content));
+  }, []);
+
+  const createMarkup = (html) => {
+    return {
+      __html: DOMPurify.sanitize(html),
+    };
+  };
+
+  const back = () => {
+    props.back("create");
+  };
   return (
-    <div
-      className=" w-[18.75rem] h-[26.56rem] rounded-xl p-5 flex flex-col bg-white cursor-pointer my-6"
-      style={{ boxShadow: "4px 6px 13px rgba(215, 215, 215, 0.25)" }}
-    >
-      <div className="flex flex-col">
-        <div>
-          <img
-            src={Article_Image}
-            alt="Blog Avatar"
-            className="rounded-xl w-[16.25rem] h-[12.375rem]"
-          />
-        </div>
-        <h3 className="font-bold text-xl text-app-black mt-6">
-          Fundamental of javascript
-        </h3>
+    <div>
+      <div className="my-6 mx-24">
+        <button
+          className="bg-purple text-lg text-white font-medium py-3 px-10 rounded-md"
+          onClick={back}
+        >
+          Back
+        </button>
       </div>
-      <div className="mt-auto flex items-center">
-        <div className="mr-4">
-          <img
-            src={Author}
-            alt="author"
-            className="rounded-full w-[57px] h-[57px]"
-          />
+      <div
+        className="h-[23.75rem] mx-24 bg-light-purple rounded-md"
+        style={{
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundImage: `url(${props.cover})`,
+        }}
+      ></div>
+      <div className="mx-48 mt-10">
+        <div className="border-b pb-7">
+          <h1 className="font-bold text-app-black text-5xl">{props.title}</h1>
+          <p className="text-app-black text-lg font-bold mt-5">
+            Written by {props.author}
+          </p>
         </div>
-        <div className="flex flex-col">
-          <p className="text-base font-semibold text-app-black">Dasteen</p>
-          <p className=" text-sm text-app-black">Jan 10, 2022</p>
+        <div className="mt-8">
+          <div dangerouslySetInnerHTML={createMarkup(convertedContent)}></div>
         </div>
+      </div>
+      <div className="flex justify-end my-6 mx-24">
+        <button
+          className="bg-purple text-lg text-white font-medium py-3 px-10 rounded-md"
+          onClick={back}
+        >
+          Back
+        </button>
       </div>
     </div>
   );
