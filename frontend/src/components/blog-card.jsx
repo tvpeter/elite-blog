@@ -1,12 +1,18 @@
 import React from "react";
 import Article_Image from "../asset/images/Article_Image.png";
 import Author from "../asset/images/author.png";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogCard() {
+  let navigate = useNavigate();
+  const openBlog = () => {
+    navigate("/blog/10");
+  };
   return (
     <div
       className=" w-[18.75rem] h-[26.56rem] rounded-xl p-5 flex flex-col bg-white cursor-pointer my-6"
       style={{ boxShadow: "4px 6px 13px rgba(215, 215, 215, 0.25)" }}
+      onClick={openBlog}
     >
       <div className="flex flex-col">
         <div>
