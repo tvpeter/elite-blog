@@ -38,6 +38,7 @@ export default function CreatePost() {
       title: title,
       cover: coverImage,
       content: rawData,
+      author: "Temitope Peter",
     };
     localStorage.setItem("blog", JSON.stringify(data));
     Swal.fire({
