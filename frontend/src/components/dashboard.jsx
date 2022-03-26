@@ -3,23 +3,14 @@ import SideBar from "./side-bar";
 import PostIcon from "../asset/images/post.svg";
 import CategoryIcon from "../asset/images/category.svg";
 import UserIcon from "../asset/images/user.svg";
+import UserInfo from "./user-info";
 
 export default function Dashboard() {
   return (
     <div className="p-[1.875rem]">
       <SideBar />
       <div className="ml-80 pl-10">
-        <div className="flex justify-end items-center">
-          <div className="flex justify-center items-center h-12 w-12 rounded-full bg-purple mr-5">
-            <p className="text-white text-lg">MN</p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-base font-medium text-app-black">
-              Lightning@email.com
-            </p>
-            <p className="text-sm text-app-black opacity-40">Content Creator</p>
-          </div>
-        </div>
+        <UserInfo />
         <div className="mt-12 mb-11">
           <p className="text-2xl text-app-black">Dashboard</p>
           <p className="text-base text-app-black opacity-40">

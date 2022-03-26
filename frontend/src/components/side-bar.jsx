@@ -14,8 +14,9 @@ export default function SideBar() {
       </div>
       <div>
         <p className="font-extrabold text-lg text-white mb-9">Dashboard</p>
-        <p className="font-medium text-lg text-white mb-9">Your Post</p>
+        <p className="font-medium text-lg text-white mb-9">Your Posts</p>
         <p className="font-medium text-lg text-white mb-9">All Post</p>
+        <p className="font-medium text-lg text-white mb-9">Create Post</p>
       </div>
     </div>
   );
