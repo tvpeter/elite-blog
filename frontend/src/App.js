@@ -4,6 +4,7 @@ import DashboardPage from "./pages/dashboard";
 import CreatePostPage from "./pages/create-post";
 import BlogPage from "./pages/blog";
 import AllBlogPage from "./pages/all-blog";
+import MyPostPage from "./pages/my-posts";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/create-post" element={<CreatePostPage />} />
+        <Route path="/my-posts" element={<MyPostPage />} />
         <Route path="/blog/:id" element={<BlogPage />} />
         <Route path="/blog" element={<AllBlogPage />} />
         <Route path="/" element={<Home />} />

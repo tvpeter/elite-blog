@@ -25,7 +25,7 @@ export default function SideBar() {
           Dashboard
         </NavLink>
         <NavLink
-          to="/blog"
+          to="/my-posts"
           className={({ isActive }) =>
             isActive
               ? "font-extrabold text-lg text-white mb-9"

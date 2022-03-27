@@ -62,7 +62,7 @@ export default function Home() {
             <img src={CaretRight} alt="Caret" />
           </div>
         </div>
-        <div className="flex flex-wrap justify-between">
+        <div className="grid grid-cols-auto">
           {Blog.map((blog, index) => (
             <BlogCard key={index} />
           ))}
