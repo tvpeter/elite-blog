@@ -12,6 +12,10 @@ let articleSchema = new Schema({
         required: true,
         trim: true,
     },
+    image: {
+        type: String,
+        required: true,
+    },
     created: {
         type: Date,
         default: Date.now

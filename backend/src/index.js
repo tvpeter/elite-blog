@@ -7,7 +7,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const dayjs = require('dayjs');
-var createError = require('http-errors')
+const createError = require('http-errors');
+const fileUpload = require('express-fileupload');
 
 const dbConfig = require('../config/database.config');
 const articleRoute = require('../routes/articles.route');
@@ -28,8 +29,12 @@ mongoose.connect(dbConfig.url, {
 const app = express();
 dotenv.config();
 app.use(helmet());
+// app.use(fileUpload({
+//   limits: { fileSize: 50 * 1024 * 1024 },
+// }));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('combined'));
 
