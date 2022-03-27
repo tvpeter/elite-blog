@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../components/nav";
 import Hero from "../asset/images/hero.svg";
 import Line from "../asset/images/line.svg";
 import CaretRight from "../asset/images/caret-right.svg";
 import BlogCard from "../components/blog-card";
 import Footer from "../components/footer";
+import ApiService from "../service";
 
 const Blog = [
   "Css",
@@ -26,6 +27,17 @@ const Blog = [
 ];
 
 export default function Home() {
+  const getAllPost = async () => {
+    try {
+      const posts = await ApiService.get("/articles");
+      console.log(posts);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  useEffect(() => {
+    getAllPost();
+  }, []);
   return (
     <div>
       <Nav />

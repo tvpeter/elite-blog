@@ -7,6 +7,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import BlogPreview from "./blog-preview";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import ApiService from "../service";
 
 export default function CreatePost() {
   const [editorState, setEditorState] = useState(() =>
@@ -16,6 +17,7 @@ export default function CreatePost() {
   const [currentStep, setCurrentStep] = useState("create");
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [file, setFile] = useState(null);
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
@@ -26,21 +28,34 @@ export default function CreatePost() {
 
   const coverImageHandler = (e) => {
     setCoverImage(URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.files[0]);
   };
   let navigate = useNavigate();
 
-  const submitBlog = (e) => {
+  const submitBlog = async (e) => {
     e.preventDefault();
     const rawData = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
-    const data = {
-      title: title,
-      cover: coverImage,
-      content: rawData,
-      author: "Temitope Peter",
-    };
-    localStorage.setItem("blog", JSON.stringify(data));
+
+    const form = new FormData();
+    form.append("image", file);
+    form.append("title", title);
+    form.append("bodyContent", rawData);
+
+    try {
+      const response = await ApiService.post("/articles/create-article", form);
+      console.log(response);
+    } catch (error) {
+      console.log(error.response);
+    }
+    // const data = {
+    //   title: title,
+    //   cover: coverImage,
+    //   content: rawData,
+    //   author: "Temitope Peter",
+    // };
+    // localStorage.setItem("blog", JSON.stringify(data));
     Swal.fire({
       icon: "success",
       title: `Blog Submitted Successfully`,
