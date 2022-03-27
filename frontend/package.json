@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
     "dompurify": "^2.3.6",
     "draft-convert": "^2.1.12",
     "draftjs-to-html": "^0.9.1",

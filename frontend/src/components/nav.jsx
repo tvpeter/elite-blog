@@ -3,6 +3,8 @@ import { requestProvider } from "webln";
 import Modal from "./modal";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "./user-info";
+import ApiService from "../service";
+import Swal from "sweetalert2";
 
 export default function Nav() {
   const [isModal, setModal] = useState(false);
@@ -21,12 +23,35 @@ export default function Nav() {
     // }
   };
 
-  const verifyAddress = (e) => {
+  const verifyAddress = async (e) => {
     e.preventDefault();
-    localStorage.setItem("address", address);
-    navigate("/dashboard");
+    // localStorage.setItem("address", address);
+    const data = {
+      address: address,
+    };
+
     try {
-    } catch (error) {}
+      const response = await ApiService.post(`/lnurl`, data);
+      if (response.data.status) {
+        Swal.fire({
+          icon: "success",
+          title: `Address Verified Successfully`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        localStorage.setItem("address", response.data.data.identifier);
+        navigate("/dashboard");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: `Invalid Addes`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   useEffect(() => {
