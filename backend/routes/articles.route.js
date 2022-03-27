@@ -1,8 +1,24 @@
 const express = require('express');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2
+const dotenv = require('dotenv');
+
+
 const app = express();
+dotenv.config();
 const articleRoute = express.Router();
 
 let articleSchema = require('../model/article.model');
+const imageUpload = multer({
+    dest: 'images',
+});
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API,
+    api_secret: process.env.CLOUDINARY_SECRET,
+});
+
 
 articleRoute.route('/').get((req, res) => {
     articleSchema.find((error, data) => {
@@ -18,18 +34,25 @@ articleRoute.route('/').get((req, res) => {
     })
 })
 
-articleRoute.route('/create-article').post((req, res, next) => {
-    articleSchema.create(req.body, (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json({
-                status: true,
-                message: 'article created successfully',
-                data: data,
+articleRoute.route('/create-article').post(imageUpload.single('image'), (req, res, next) => {
+
+    cloudinary.uploader.upload(req.file.path, { folder: 'elite/', format: 'png' })
+        .then((result) => {
+            req.body.image = result.public_id;
+            articleSchema.create(req.body, (error, data) => {
+                if (error) {
+                    return next(error)
+                } else {
+                    res.json({
+                        status: true,
+                        message: 'article created successfully',
+                        data,
+                    })
+                }
             })
-        }
-    })
+        }).catch((error) => {
+            console.log(error);
+        });
 });
 
 
