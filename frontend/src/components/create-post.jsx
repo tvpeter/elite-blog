@@ -37,6 +37,24 @@ export default function CreatePost() {
     const rawData = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );
+    if (!editorState.getCurrentContent().hasText()) {
+      Swal.fire({
+        icon: "error",
+        title: `You can't post an empty Article`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+    if (!file) {
+      Swal.fire({
+        icon: "error",
+        title: `Please Upload a cover Image`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
 
     const form = new FormData();
     form.append("image", file);
@@ -45,24 +63,25 @@ export default function CreatePost() {
 
     try {
       const response = await ApiService.post("/articles/create-article", form);
-      console.log(response);
+      if (response.data.status) {
+        Swal.fire({
+          icon: "success",
+          title: `Article Created Successfully`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(`/blog/${response.data.data._id}`);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     } catch (error) {
       console.log(error.response);
     }
-    // const data = {
-    //   title: title,
-    //   cover: coverImage,
-    //   content: rawData,
-    //   author: "Temitope Peter",
-    // };
-    // localStorage.setItem("blog", JSON.stringify(data));
-    Swal.fire({
-      icon: "success",
-      title: `Blog Submitted Successfully`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    navigate("/dashboard");
   };
 
   return (
@@ -106,7 +125,6 @@ export default function CreatePost() {
                     className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 w-[80%]`}
                     accept="image/*"
                     onChange={(e) => coverImageHandler(e)}
-                    required
                   />
                 </div>
                 <div className="flex flex-col my-4">
