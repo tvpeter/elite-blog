@@ -27,12 +27,18 @@ const Blog = [
 ];
 
 export default function Home() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const getAllPost = async () => {
     try {
       const posts = await ApiService.get("/articles");
-      console.log(posts);
+      if (posts.data.status) {
+        setArticles(posts.data.data);
+      }
+      setLoading(false);
     } catch (error) {
       console.log(error.response);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -75,8 +81,8 @@ export default function Home() {
           </div>
         </div>
         <div className="grid grid-cols-auto">
-          {Blog.map((blog, index) => (
-            <BlogCard key={index} />
+          {articles.map((article, index) => (
+            <BlogCard article={article} key={index} />
           ))}
         </div>
       </div>

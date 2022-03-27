@@ -70,7 +70,8 @@ export default function CreatePost() {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(`/blog/${response.data.data._id}`);
+        console.log(response);
+        // navigate(`/blog/${response.data.data._id}`);
       } else {
         Swal.fire({
           icon: "error",
