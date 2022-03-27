@@ -8,7 +8,6 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const dayjs = require('dayjs');
 const createError = require('http-errors');
-const fileUpload = require('express-fileupload');
 
 const dbConfig = require('../config/database.config');
 const articleRoute = require('../routes/articles.route');
