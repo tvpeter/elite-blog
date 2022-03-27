@@ -6,29 +6,13 @@ import CaretRight from "../asset/images/caret-right.svg";
 import BlogCard from "../components/blog-card";
 import Footer from "../components/footer";
 import ApiService from "../service";
-
-const Blog = [
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-  "Css",
-];
+import Loader from "../components/loader/loader";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const getAllPost = async () => {
     try {
       const posts = await ApiService.get("/articles");
@@ -41,7 +25,6 @@ export default function Home() {
       setLoading(false);
     }
   };
-  console.log(articles);
   useEffect(() => {
     getAllPost();
   }, []);
@@ -74,18 +57,27 @@ export default function Home() {
             </p>
             <img src={Line} alt="Line" />
           </div>
-          <div className="flex items-center cursor-pointer">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/blog")}
+          >
             <p className="font-bold text-xl text-app-black mr-3">
               See All Article
             </p>
             <img src={CaretRight} alt="Caret" />
           </div>
         </div>
-        <div className="grid grid-cols-auto">
-          {articles.map((article, index) => (
-            <BlogCard article={article} key={index} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center my-12">
+            <Loader />
+          </div>
+        ) : (
+          <div className="grid grid-cols-auto">
+            {articles.map((article, index) => (
+              <BlogCard article={article} key={index} />
+            ))}
+          </div>
+        )}
       </div>
       <Footer />
     </div>
