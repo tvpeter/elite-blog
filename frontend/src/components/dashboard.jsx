@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "./side-bar";
 import PostIcon from "../asset/images/post.svg";
 import CategoryIcon from "../asset/images/category.svg";
 import UserIcon from "../asset/images/user.svg";
 import UserInfo from "./user-info";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "rsuite";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="p-[1.875rem]">
       <SideBar />

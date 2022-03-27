@@ -15,6 +15,7 @@
     "react-draft-wysiwyg": "^1.14.7",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "rsuite": "^5.6.6",
     "sweetalert2": "^11.4.7",
     "web-vitals": "^2.1.4",
     "webln": "^0.3.0"
