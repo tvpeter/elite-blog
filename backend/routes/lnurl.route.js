@@ -1,5 +1,6 @@
 const lnurl = require('lnurl-pay');
 const express = require('express');
+const util = require('../utils/util');
 
 
 const lnurlRoute = express.Router();
@@ -8,19 +9,10 @@ lnurlRoute.route('/').post((req, res) => {
 
     lnurl.requestPayServiceParams({lnUrlOrAddress:req.body.address})
         .then((result) => {
-            res.json({
-                status: true,
-                message: 'address verified successfully',
-                data: result,
-            })
-
+            return util.sendSuccess(res, 200, result);
         })
         .catch((error) => {
-            res.json({
-                status: false,
-                message: 'Invalid address',
-                error: error.message,
-            })
+            return util.sendError(res, 400, 'Invalid address');
         })
 
 });
