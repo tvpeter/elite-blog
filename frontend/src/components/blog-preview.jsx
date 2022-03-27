@@ -39,7 +39,7 @@ export default function BlogPreview(props) {
         <div className="border-b pb-7">
           <h1 className="font-bold text-app-black text-5xl">{props.title}</h1>
           <p className="text-app-black text-lg font-bold mt-5">
-            Written by {props.author}
+            Written by <span className="capitalize">{props.author}</span>
           </p>
         </div>
         <div className="mt-8">

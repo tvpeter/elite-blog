@@ -22,6 +22,7 @@ export default function CreatePost() {
     setEditorState(editorState);
   };
 
+  const user = localStorage.getItem("address");
   function previewHandler() {
     setCurrentStep("preview");
   }
@@ -102,7 +103,7 @@ export default function CreatePost() {
         <BlogPreview
           title={title}
           content={convertToRaw(editorState.getCurrentContent())}
-          author={"Lightning"}
+          author={user}
           back={setCurrentStep}
           cover={coverImage}
         />
