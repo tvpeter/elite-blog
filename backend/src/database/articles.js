@@ -36,7 +36,7 @@ async function updateArticle(id, article) {
 
 async function getArticle(id){
   const database = await getDatabase();
-  return database.collection(collectionName).find({ _id: ObjectId(id) });
+  return database.collection(collectionName).findOne({ _id: ObjectID(id) });
 }
 
 module.exports = {
