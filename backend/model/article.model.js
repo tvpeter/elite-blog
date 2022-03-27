@@ -5,14 +5,28 @@ let articleSchema = new Schema({
     title: {
         type: String,
         required: true,
+        trim: true,
     },
     bodyContent: {
         type: String,
         required: true,
+        trim: true,
     },
-    
-}, {
-    collection: 'articles'
-})
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    updated: {
+        type: Date,
+        default: Date.now
+    },
+},
+    {
+        collection: 'articles'
+    },
+    {
+        timestamps: true,
+    }
+);
 
 module.exports = mongoose.model('articleSchema', articleSchema)
