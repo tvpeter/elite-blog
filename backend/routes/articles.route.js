@@ -3,12 +3,11 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2
 const dotenv = require('dotenv');
 
+let articleSchema = require('../model/article.model');
 
-const app = express();
 dotenv.config();
 const articleRoute = express.Router();
 
-let articleSchema = require('../model/article.model');
 const imageUpload = multer({
     dest: 'images',
 });
