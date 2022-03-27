@@ -37,7 +37,7 @@ articleRoute.route('/create-article').post(imageUpload.single('image'), (req, re
 
     cloudinary.uploader.upload(req.file.path, { folder: 'elite/', format: 'png' })
         .then((result) => {
-            req.body.image = result.public_id;
+            req.body.image = result.secure_url;
             articleSchema.create(req.body, (error, data) => {
                 if (error) {
                     return next(error)
