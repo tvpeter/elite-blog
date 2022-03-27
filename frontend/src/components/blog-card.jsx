@@ -2,11 +2,19 @@ import React from "react";
 import Article_Image from "../asset/images/Article_Image.png";
 import Author from "../asset/images/author.png";
 import { useNavigate } from "react-router-dom";
+import { dateFormatter } from "../util/index";
 
 export default function BlogCard(props) {
   let navigate = useNavigate();
   const openBlog = (id) => {
     navigate(`/blog/${id}`);
+  };
+  const initials = (address) => {
+    let initials = "";
+    if (address) {
+      initials = `${address[0]}${address[1]}`;
+    }
+    return initials;
   };
   return (
     <div
@@ -17,7 +25,7 @@ export default function BlogCard(props) {
       <div className="flex flex-col">
         <div>
           <img
-            src={`https://res.cloudinary.com/tvpeter/image/upload/v1648407361/${props.article.image}.png`}
+            src={`${props.article.image}`}
             alt="Blog Avatar"
             className="rounded-xl w-[16.25rem] h-[12.375rem]"
           />
@@ -27,16 +35,18 @@ export default function BlogCard(props) {
         </h3>
       </div>
       <div className="mt-auto flex items-center">
-        <div className="mr-4">
-          <img
-            src={Author}
-            alt="author"
-            className="rounded-full w-[57px] h-[57px]"
-          />
+        <div className="mr-4 w-[57px] h-[57px] rounded-full flex justify-center items-center bg-light-purple">
+          <p className="text-purple text-lg uppercase">
+            {initials(props.article.author)}
+          </p>
         </div>
         <div className="flex flex-col">
-          <p className="text-base font-semibold text-app-black">Dasteen</p>
-          <p className=" text-sm text-app-black">Jan 10, 2022</p>
+          <p className="text-base font-semibold text-app-black">
+            {props.article.author}
+          </p>
+          <p className=" text-sm text-app-black">
+            {dateFormatter(props.article.created)}
+          </p>
         </div>
       </div>
     </div>

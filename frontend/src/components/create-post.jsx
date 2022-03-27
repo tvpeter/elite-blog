@@ -55,11 +55,22 @@ export default function CreatePost() {
       });
       return;
     }
-
+    const currentUser = localStorage.getItem("address");
+    if (!currentUser) {
+      Swal.fire({
+        icon: "error",
+        title: `Please Login`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
+      return;
+    }
     const form = new FormData();
     form.append("image", file);
     form.append("title", title);
     form.append("bodyContent", rawData);
+    form.append("author", currentUser);
 
     try {
       const response = await ApiService.post("/articles/create-article", form);
@@ -70,8 +81,8 @@ export default function CreatePost() {
           showConfirmButton: false,
           timer: 1500,
         });
-        console.log(response);
-        // navigate(`/blog/${response.data.data._id}`);
+
+        navigate(`/blog/${response.data.data._id}`);
       } else {
         Swal.fire({
           icon: "error",

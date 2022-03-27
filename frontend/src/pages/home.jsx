@@ -41,6 +41,7 @@ export default function Home() {
       setLoading(false);
     }
   };
+  console.log(articles);
   useEffect(() => {
     getAllPost();
   }, []);
