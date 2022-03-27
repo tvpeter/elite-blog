@@ -55,7 +55,7 @@ export default function CreatePost() {
       {currentStep === "preview" && (
         <BlogPreview
           title={title}
-          content={editorState.getCurrentContent()}
+          content={convertToRaw(editorState.getCurrentContent())}
           author={"Lightning"}
           back={setCurrentStep}
           cover={coverImage}

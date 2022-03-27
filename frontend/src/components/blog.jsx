@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "./nav";
 import Footer from "./footer";
-import { convertToHTML } from "draft-convert";
-import { convertFromRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 
 export default function Blog(props) {
@@ -18,7 +17,7 @@ export default function Blog(props) {
       setCover(blog.cover);
       setAuthor(blog.author);
       let tempContent = JSON.parse(blog.content);
-      setConvertedContent(convertToHTML(convertFromRaw(tempContent)));
+      setConvertedContent(draftToHtml(tempContent));
     }
   }, []);
   const createMarkup = (html) => {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { convertToHTML } from "draft-convert";
+import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 
 export default function BlogPreview(props) {
   const [convertedContent, setConvertedContent] = useState(null);
   useEffect(() => {
-    setConvertedContent(convertToHTML(props.content));
+    setConvertedContent(draftToHtml(props.content));
   }, []);
 
   const createMarkup = (html) => {
