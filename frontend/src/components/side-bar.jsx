@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function SideBar() {
   return (
@@ -12,11 +13,47 @@ export default function SideBar() {
         <p className="font-bold text-4xl text-white">Elite</p>
         <p className="font-bold text-lg text-dark">.blog</p>
       </div>
-      <div>
-        <p className="font-extrabold text-lg text-white mb-9">Dashboard</p>
-        <p className="font-medium text-lg text-white mb-9">Your Posts</p>
-        <p className="font-medium text-lg text-white mb-9">All Post</p>
-        <p className="font-medium text-lg text-white mb-9">Create Post</p>
+      <div className="flex flex-col">
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive
+              ? "font-extrabold text-lg text-white mb-9"
+              : "font-medium text-lg text-white mb-9"
+          }
+        >
+          Dashboard
+        </NavLink>
+        <NavLink
+          to="/blog"
+          className={({ isActive }) =>
+            isActive
+              ? "font-extrabold text-lg text-white mb-9"
+              : "font-medium text-lg text-white mb-9"
+          }
+        >
+          Your Posts
+        </NavLink>
+        <NavLink
+          to="/blog"
+          className={({ isActive }) =>
+            isActive
+              ? "font-extrabold text-lg text-white mb-9"
+              : "font-medium text-lg text-white mb-9"
+          }
+        >
+          All Post
+        </NavLink>
+        <NavLink
+          to="/create-post"
+          className={({ isActive }) =>
+            isActive
+              ? "font-extrabold text-lg text-white mb-9"
+              : "font-medium text-lg text-white mb-9"
+          }
+        >
+          Create Post
+        </NavLink>
       </div>
     </div>
   );
