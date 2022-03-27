@@ -27,7 +27,7 @@ articleRoute.route('/').get((req, res) => {
             res.json({
                 status: true,
                 message: 'All articles retrieved successfully',
-                data: data,
+                data,
             })
         }
     })
@@ -63,7 +63,7 @@ articleRoute.route('/get-article/:id').get((req, res) => {
             res.json({
                 status: true,
                 message: 'article retreived successfully',
-                data: data,
+                data,
             })
         }
     })
