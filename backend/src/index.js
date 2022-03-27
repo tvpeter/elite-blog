@@ -12,6 +12,7 @@ const fileUpload = require('express-fileupload');
 
 const dbConfig = require('../config/database.config');
 const articleRoute = require('../routes/articles.route');
+const lnurlRoute = require('../routes/lnurl.route');
 
 
 //set db connection
@@ -41,6 +42,7 @@ app.use(morgan('combined'));
 const port = process.env.PORT || 3001;
 
 app.use('/articles', articleRoute);
+app.use('/lnurl', lnurlRoute);
 
 // Index Route
 app.get('/', (req, res) => {
