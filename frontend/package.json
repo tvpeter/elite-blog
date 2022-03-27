@@ -9,13 +9,15 @@
     "dompurify": "^2.3.6",
     "draft-convert": "^2.1.12",
     "draftjs-to-html": "^0.9.1",
+    "lnurl-pay": "^0.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "sweetalert2": "^11.4.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webln": "^0.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
