@@ -45,11 +45,35 @@ articleRoute
           } else {
             res.json({
               status: true,
-              message: "article created successfully",
+              message: "All articles retrieved successfully",
               data,
             });
           }
         });
+      });
+
+    articleRoute
+      .route("/create-article")
+      .post(imageUpload.single("image"), (req, res, next) => {
+        cloudinary.uploader
+          .upload(req.file.path, { folder: "elite/", format: "png" })
+          .then((result) => {
+            req.body.image = result.secure_url;
+            articleSchema.create(req.body, (error, data) => {
+              if (error) {
+                return next(error);
+              } else {
+                res.json({
+                  status: true,
+                  message: "article created successfully",
+                  data,
+                });
+              }
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
