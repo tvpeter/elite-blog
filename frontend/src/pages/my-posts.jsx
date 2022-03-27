@@ -1,6 +1,11 @@
 import React from "react";
 import MyPosts from "../components/my-posts";
+import RouteProtector from "../hoc/routeProtector";
 
 export default function MyPostPage() {
-  return <MyPosts />;
+  return (
+    <RouteProtector>
+      <MyPosts />
+    </RouteProtector>
+  );
 }
