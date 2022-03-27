@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2
 const dotenv = require('dotenv');
+const util = require('../utils/util');
 
 let articleSchema = require('../model/article.model');
 
@@ -22,13 +23,9 @@ cloudinary.config({
 articleRoute.route('/').get((req, res) => {
     articleSchema.find((error, data) => {
         if (error) {
-            return next(error)
+            return util.sendError(res, 400, error);
         } else {
-            res.json({
-                status: true,
-                message: 'All articles retrieved successfully',
-                data,
-            })
+            return util.sendSuccess(res, 200, data);
         }
     })
 })
@@ -40,17 +37,13 @@ articleRoute.route('/create-article').post(imageUpload.single('image'), (req, re
             req.body.image = result.secure_url;
             articleSchema.create(req.body, (error, data) => {
                 if (error) {
-                    return next(error)
+                    return util.sendError(res, 400, error);
                 } else {
-                    res.json({
-                        status: true,
-                        message: 'article created successfully',
-                        data,
-                    })
+                    return util.sendSuccess(res, 201, data);
                 }
             })
         }).catch((error) => {
-            console.log(error);
+            return util.sendError(res, 400, error);
         });
 });
 
@@ -58,13 +51,9 @@ articleRoute.route('/create-article').post(imageUpload.single('image'), (req, re
 articleRoute.route('/get-article/:id').get((req, res) => {
     articleSchema.findById(req.params.id, (error, data) => {
         if (error) {
-            return next(error)
+            return util.sendError(res, 400, error);
         } else {
-            res.json({
-                status: true,
-                message: 'article retreived successfully',
-                data,
-            })
+            return util.sendSuccess(res, 200, data);
         }
     })
 })
@@ -75,13 +64,9 @@ articleRoute.route('/update-article/:id').put((req, res, next) => {
         $set: req.body
     }, (error, data) => {
         if (error) {
-            return next(error);
+            return util.sendError(res, 400, error);
         } else {
-            res.json({
-                status: true,
-                message: 'article retreived successfully',
-                data: data,
-            })
+            return util.sendSuccess(res, 200, data);
         }
     })
 })
@@ -89,13 +74,9 @@ articleRoute.route('/update-article/:id').put((req, res, next) => {
 articleRoute.route('/remove-article/:id').delete((req, res, next) => {
     articleSchema.findByIdAndRemove(req.params.id, (error, data) => {
         if (error) {
-            return next(error);
+            return util.sendError(res, 400, error);
         } else {
-            res.status(200).json({
-                status: true,
-                message: 'article deleted successfully',
-                msg: data
-            })
+            return util.sendSuccess(res, 200, data);
         }
     })
 })

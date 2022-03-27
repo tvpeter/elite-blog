@@ -16,6 +16,10 @@ let articleSchema = new Schema({
         type: String,
         required: true,
     },
+    author: {
+        type: String,
+        required: false,
+    },
     created: {
         type: Date,
         default: Date.now
