@@ -3,10 +3,27 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { startDatabase } = require('./database/mongo');
-const { insertArticle, getArticles, deleteArticle, updateArticle, getArticle  } = require('./database/articles');
+const path = require('path');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const dayjs = require('dayjs');
+var createError = require('http-errors')
 
+const dbConfig = require('../config/database.config');
+const articleRoute = require('../routes/articles.route');
+
+
+//set db connection
+mongoose.Promise = global.Promise;
+mongoose.connect(dbConfig.url, {
+  useNewUrlParser: true
+}).then(() => {
+  console.log('Database connected')
+},
+  error => {
+    console.log('Database could not be connected : ' + error)
+  }
+)
 
 const app = express();
 dotenv.config();
@@ -18,68 +35,30 @@ app.use(morgan('combined'));
 
 const port = process.env.PORT || 3001;
 
+app.use('/articles', articleRoute);
 
-app.get('/', async (req, res) => {
-  const articles = await getArticles();
-  res.status(200).json({
-      status: true,
-      message: 'Articles retrieved successfully',
-      data: articles,
+// Index Route
+app.get('/', (req, res) => {
+  res.json({
+    status: true,
+    message: 'API responding',
+    time: dayjs(Date.now()).format(),
   });
 });
 
-app.post('/', async (req, res) => {
-  const article = req.body;
-  const insertedArticle = await insertArticle(article);
 
-  res.status(201).json({
-      status: true,
-      message: 'Article created successfully',
-      data: {
-        id: insertedArticle,
-      }
-  })
+app.use((req, res, next) => {
+  next(createError(404));
 });
 
-app.delete('/:id', async (req, res) => {
-  const id = await deleteArticle(req.params.id);
-
-  res.status(200).json({
-    status: true,
-    message: 'Article deleted successfully',
-    data: {
-      id: id,
-    }
-  })
+// error handler
+app.use(function (err, req, res, next) {
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500;
+  res.status(err.statusCode).send(err.message);
 });
-
-app.put('/:id', async (req, res) => {
-  const updatedArticle = req.body;
-  const article = await updateArticle(req.params.id, updateArticle);
-
-  res.status(200).json({
-    status: true,
-    message: 'Article updated succcessfully',
-    data: {
-      article: article,
-    }
-  })
-});
-
-app.get('/:id', async (req, res) => {
-  const article = await getArticle(req.params.id)
-  res.send(article);
-})
-
-// start the in-memory MongoDB instance
-startDatabase().then(async () => {
-
-  await insertArticle({
-    title: 'Hello, now from the in-memory database!',
-    body: 'This is the body of the request'
-  });
 
   app.listen(port, async () => {
     console.log(`Listening on port ${port}`);
   });
-});
+
