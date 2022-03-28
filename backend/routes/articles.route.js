@@ -3,6 +3,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2
 const dotenv = require('dotenv');
 const util = require('../utils/util');
+const lnurl = require('lnurl-pay');
 
 let articleSchema = require('../model/article.model');
 
@@ -54,8 +55,15 @@ articleRoute.route('/get-article/:id').get((req, res) => {
             return util.sendError(res, 400, error);
         } else {
             //check if it's owner or payment has been made
+            const address = req.query.address;
+            //check address [not necessary]
+            if(data.author === address){
+                return util.sendSuccess(res, 200, data);
+            }
             
-            return util.sendSuccess(res, 200, data);
+            //check if user has already paid
+            
+
         }
     })
 })
