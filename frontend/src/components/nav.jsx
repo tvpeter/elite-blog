@@ -45,6 +45,12 @@ export default function Nav() {
         setLoading(false);
       }
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: `Invalid Addes`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       setLoading(false);
       console.log(error.response);
     }
