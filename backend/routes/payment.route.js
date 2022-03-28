@@ -9,6 +9,7 @@ let paidArticleSchema = require("../model/paidArticles.model");
 const paymentRoute = express.Router();
 
 paymentRoute.route("/register").post((req, res) => {
+  
   paymentSchema.create(req.body, (error, data) => {
     if (error) {
       return util.sendError(res, 400, error);
