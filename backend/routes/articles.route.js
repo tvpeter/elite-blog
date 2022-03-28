@@ -23,14 +23,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-articleRoute.route("/").get((req, res) => {
-  articleSchema.find((error, data) => {
-    if (error) {
-      return util.sendError(res, 400, error);
-    } else {
-      return util.sendSuccess(res, 200, data);
-    }
-  });
+articleRoute.route("/").get(async (req, res) => {
+
+  try {
+
+    const articles = await articleSchema.find({});
+    return util.sendSuccess(res, 200, articles);
+
+  } catch (error) {
+    
+    return util.sendError(res, 400, error);
+  }
 });
 
 articleRoute
@@ -81,9 +84,9 @@ articleRoute.route("/get-article/:id").get((req, res) => {
                 })
                 .then((result) => {
                   const articleData = {
-                      articleId: data._id,
-                      author: data.author,
-                      userLnAddress: address
+                    articleId: data._id,
+                    author: data.author,
+                    userLnAddress: address
                   }
                   paidArticleSchema.create(articleData)
                   return util.sendSuccess(res, 402, result);
