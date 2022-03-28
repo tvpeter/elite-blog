@@ -2,9 +2,13 @@ const express = require('express');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2
 const dotenv = require('dotenv');
+const lnurl = require('lnurl-pay');
+
 const util = require('../utils/util');
+const generateRequestInvoice = require('../utils/generateInvoice');
 
 let articleSchema = require('../model/article.model');
+let paymentSchema = require('../model/payments.model');
 
 dotenv.config();
 const articleRoute = express.Router();
@@ -53,7 +57,35 @@ articleRoute.route('/get-article/:id').get((req, res) => {
         if (error) {
             return util.sendError(res, 400, error);
         } else {
-            return util.sendSuccess(res, 200, data);
+            //check if it's owner or payment has been made
+            const address = req.query.address;
+            if (data.author === address) {
+                return util.sendSuccess(res, 200, data);
+            }
+
+            //check if user has already paid
+            paymentSchema.find({ articleId: data._id, lnAddress: address }).count((error, number) => {
+                if (error) {
+                    return util.sendError(res, 400, error);
+                } else {
+                    if (number > 0) {
+                        return util.sendSuccess(res, 200, data);
+                    } else {
+                        //return 402 with invoice
+                        lnurl.requestInvoice({
+                            lnUrlOrAddress: address,
+                            tokens: 10,
+                        })
+                            .then((result) => {
+                                return util.sendSuccess(res, 402, result);
+                            })
+                            .catch((error) => {
+                                return util.sendError(res, 400, error);
+                            });
+                    }
+                }
+            })
+
         }
     })
 })
