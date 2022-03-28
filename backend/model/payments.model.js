@@ -12,6 +12,10 @@ let paymentSchema = new Schema({
         required: true,
         trim: true,
     },
+    hash: {
+        type: String,
+        trim: true,
+    },
     created: {
         type: Date,
         default: Date.now

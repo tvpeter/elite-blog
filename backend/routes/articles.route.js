@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const lnurl = require('lnurl-pay');
 
 const util = require('../utils/util');
-const generateRequestInvoice = require('../utils/generateInvoice');
 
 let articleSchema = require('../model/article.model');
 let paymentSchema = require('../model/payments.model');

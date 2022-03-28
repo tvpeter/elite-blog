@@ -12,6 +12,7 @@ const createError = require('http-errors');
 const dbConfig = require('../config/database.config');
 const articleRoute = require('../routes/articles.route');
 const lnurlRoute = require('../routes/lnurl.route');
+const paymentRoute = require('../routes/payment.route');
 
 
 //set db connection
@@ -42,6 +43,7 @@ const port = process.env.PORT || 3001;
 
 app.use('/articles', articleRoute);
 app.use('/lnurl', lnurlRoute);
+app.use('/payment', paymentRoute);
 
 // Index Route
 app.get('/', (req, res) => {
