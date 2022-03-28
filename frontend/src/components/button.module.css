@@ -1,0 +1,33 @@
+.button__text {
+  transition: all 0.2s;
+}
+
+.button__loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button__loading::after {
+  content: "";
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 5px solid transparent;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: button-loader-spinner 1s ease infinite;
+}
+
+@keyframes button-loader-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

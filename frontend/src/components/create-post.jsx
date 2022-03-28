@@ -8,6 +8,7 @@ import BlogPreview from "./blog-preview";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../service";
+import classes from "./button.module.css";
 
 export default function CreatePost() {
   const [editorState, setEditorState] = useState(() =>
@@ -18,6 +19,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
@@ -74,6 +76,7 @@ export default function CreatePost() {
     form.append("author", currentUser);
 
     try {
+      setLoading(true);
       const response = await ApiService.post("/articles/create-article", form);
       if (response.data.status) {
         Swal.fire({
@@ -82,7 +85,7 @@ export default function CreatePost() {
           showConfirmButton: false,
           timer: 1500,
         });
-
+        setLoading(false);
         navigate(`/blog/${response.data.data._id}`);
       } else {
         Swal.fire({
@@ -91,8 +94,10 @@ export default function CreatePost() {
           showConfirmButton: false,
           timer: 1500,
         });
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error.response);
     }
   };
@@ -159,11 +164,15 @@ export default function CreatePost() {
                   />
                 </div>
                 <div className="flex items-center justify-end">
-                  <button className="bg-purple py-3 font-medium border border-purple px-9 text-white rounded-md mr-8">
-                    Publish
+                  <button
+                    className={`bg-purple py-3 font-medium border border-purple px-9 text-white rounded-md mr-8 relative ${
+                      loading ? classes.button__loading : ""
+                    }`}
+                  >
+                    <span className={`${classes.button__text}`}>Publish</span>
                   </button>
                   <button
-                    className="py-3 px-9 bg-light-purple rounded-md text-purple font-medium border border-purple"
+                    className="py-3 px-9 bg-light-purple rounded-md text-purple font-medium border border-purple relative"
                     onClick={previewHandler}
                   >
                     Preview

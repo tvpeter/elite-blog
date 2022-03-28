@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import UserInfo from "./user-info";
 import ApiService from "../service";
 import Swal from "sweetalert2";
+import classes from "./button.module.css";
 
 export default function Nav() {
   const [isModal, setModal] = useState(false);
   const [address, setAddress] = useState("");
-  const [userAddress, setUserAddress] = useState("");
   const [logged, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const openModal = async () => {
     setModal(true);
@@ -25,7 +26,7 @@ export default function Nav() {
 
   const verifyAddress = async (e) => {
     e.preventDefault();
-    // localStorage.setItem("address", address);
+    setLoading(true);
     const data = {
       address: address,
     };
@@ -40,6 +41,7 @@ export default function Nav() {
           timer: 1500,
         });
         localStorage.setItem("address", response.data.data.identifier);
+        setLoading(false);
         navigate("/dashboard");
       } else {
         Swal.fire({
@@ -48,8 +50,10 @@ export default function Nav() {
           showConfirmButton: false,
           timer: 1500,
         });
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error.response);
     }
   };
@@ -57,7 +61,6 @@ export default function Nav() {
   useEffect(() => {
     const user = localStorage.getItem("address");
     if (user) {
-      setUserAddress(user);
       setLoggedIn(true);
     }
   }, []);
@@ -86,8 +89,12 @@ export default function Nav() {
             />
           </div>
           <div className="flex justify-end py-3 mt-6 px-4 bg-light-purple">
-            <button className="py-2 px-9 bg-light-purple rounded-md text-purple font-medium border border-purple">
-              Login
+            <button
+              className={`py-2 px-9 bg-purple rounded-md text-white font-medium border border-purple relative ${
+                loading ? classes.button__loading : ""
+              }`}
+            >
+              <span className={classes.button__text}>Login</span>
             </button>
           </div>
         </form>
