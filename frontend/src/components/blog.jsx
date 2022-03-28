@@ -20,16 +20,14 @@ export default function Blog(props) {
   const [id, setId] = useState(useParams().id);
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(true);
-  const [isModal, setIsModal] = useState(true);
-  const [invoice, setInvoice] = useState(
-    "lnbc300n1p3yzrlvpp50klfcv97xfqpwr7pyxh8gds686xgr52fa44c3c4q4nsuzpqgfzyqdqvw35x2grhv9uscqzpgxqyz5vqsp5d33gq5pk966k4l6vzkdp9akgvrtncmd7pmmgntg03f2hfgwl6drs9qyyssqhmvz88jajqxc06caazqxl48aq6cjl9tz3h266vktu2jnk8ecsy2yrha89r7xhurta7al47rgufgshjt24h7w8m9pkxaafa3p3g8qwhgqye8ztm"
-  );
+  const [isModal, setIsModal] = useState(false);
+  const [invoice, setInvoice] = useState("");
   const navigate = useNavigate();
 
   const fetchArticle = async () => {
     try {
       const response = await ApiService.get(
-        `/articles/get-article/${id}?address=teebams@getalby.co`
+        `/articles/get-article/${id}?address=${localStorage.getItem("address")}`
       );
       setTitle(response.data.data.title);
       setCover(response.data.data.image);
@@ -49,6 +47,10 @@ export default function Blog(props) {
         });
         navigate("/");
       }
+      if (error.response.status === 402) {
+        setInvoice(error.response.data.data.invoice);
+        setIsModal(true);
+      }
       console.log(error.response);
     }
   };
@@ -62,13 +64,64 @@ export default function Blog(props) {
     };
   };
 
+  const sendConfirmation = (info) => {
+    const data = {
+      lnAddress: localStorage.getItem("address"),
+      articleId: id,
+      payment_hash: info.payment_hash,
+    };
+    console.log(data);
+  };
+
+  function sha256(hexString) {
+    const match = hexString.match(/.{1,2}/g);
+    const msgUint8 = new Uint8Array(match.map((byte) => parseInt(byte, 16)));
+
+    //const msgUint8 = new TextEncoder().encode(message);
+    return crypto.subtle.digest("SHA-256", msgUint8).then((hashBuffer) => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+      return hashHex;
+    });
+  }
+
   const makePayment = async () => {
     try {
       const webln = await requestProvider();
       const info = await webln.sendPayment(invoice);
-      console.log(info);
+      if (info) {
+        setIsModal(false);
+        setLoading(true);
+        sha256(info.preimage).then((hash) => {
+          if (hash === info.paymentHash) {
+            Swal.fire({
+              icon: "success",
+              title: `Transaction successful`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            sendConfirmation(info);
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: `Transaction not successful`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+          }
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.toString());
+      Swal.fire({
+        icon: "error",
+        title: error.toString(),
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
   return (
