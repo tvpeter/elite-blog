@@ -2,7 +2,6 @@ const lnurl = require('lnurl-pay');
 const express = require('express');
 const util = require('../utils/util');
 
-
 const lnurlRoute = express.Router();
 
 lnurlRoute.route('/').post((req, res) => {
