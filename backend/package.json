@@ -8,7 +8,6 @@
     "dev": "nodemon --exec 'npm start'"
   },
   "dependencies": {
-    "@radar/lnrpc": "^0.11.1-beta.1",
     "body-parser": "^1.19.2",
     "cloudinary": "^1.29.0",
     "cors": "^2.8.5",
