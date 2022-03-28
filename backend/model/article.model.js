@@ -18,7 +18,11 @@ let articleSchema = new Schema({
     },
     author: {
         type: String,
-        required: false,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
     },
     created: {
         type: Date,

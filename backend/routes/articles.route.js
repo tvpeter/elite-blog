@@ -53,6 +53,8 @@ articleRoute.route('/get-article/:id').get((req, res) => {
         if (error) {
             return util.sendError(res, 400, error);
         } else {
+            //check if it's owner or payment has been made
+            
             return util.sendSuccess(res, 200, data);
         }
     })
