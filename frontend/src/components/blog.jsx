@@ -72,7 +72,13 @@ export default function Blog(props) {
     };
     try {
       const response = await ApiService.post(`/payment/register`, data);
-      console.log(response);
+      setTitle(response.data.data.title);
+      setCover(response.data.data.image);
+      setAuthor(response.data.data.author);
+      setDate(response.data.data.created);
+      let tempContent = JSON.parse(response.data.data.bodyContent);
+      setConvertedContent(draftToHtml(tempContent));
+      setLoading(false);
     } catch (error) {
       console.log(error.response);
     }
