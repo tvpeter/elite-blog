@@ -22,7 +22,6 @@ dashboardRoute.route("/").get(async (req, res) => {
 
             let returnedArticle = await paymentSchema.find({articleId: article.articleId});
 
-
             if(returnedArticle){
                 count += 1;
                 subscribedUsers += 1;

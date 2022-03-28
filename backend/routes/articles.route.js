@@ -8,7 +8,6 @@ const util = require("../utils/util");
 
 let articleSchema = require("../model/article.model");
 let paymentSchema = require("../model/payments.model");
-let paidArticleSchema = require("../model/paidArticles.model");
 
 dotenv.config();
 const articleRoute = express.Router();
@@ -88,7 +87,6 @@ articleRoute.route("/get-article/:id").get((req, res) => {
                     author: data.author,
                     userLnAddress: address
                   }
-                  paidArticleSchema.create(articleData)
                   return util.sendSuccess(res, 402, result);
                 })
                 .catch((error) => {
