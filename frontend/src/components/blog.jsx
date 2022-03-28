@@ -64,13 +64,18 @@ export default function Blog(props) {
     };
   };
 
-  const sendConfirmation = (info) => {
+  const sendConfirmation = async (info) => {
     const data = {
       lnAddress: localStorage.getItem("address"),
       articleId: id,
-      payment_hash: info.payment_hash,
+      hash: info.payment_hash,
     };
-    console.log(data);
+    try {
+      const response = await ApiService.post(`/payment/register`, data);
+      console.log(response);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   function sha256(hexString) {

@@ -40,7 +40,9 @@ export default function Dashboard() {
           </div>
           <div className="h-40 w-80 bg-light-purple p-10 rounded-[20px] flex justify-between items-center cursor-pointer mt-4">
             <div className="flex flex-col">
-              <p className="font-medium text-app-black text-xl mb-1">Balance</p>
+              <p className="font-medium text-app-black text-xl mb-1">
+                Sats Generated
+              </p>
               <p className="text-purple text-3xl">20,000 Sat</p>
             </div>
             <div>
