@@ -9,6 +9,8 @@ import { dateFormatter } from "../util";
 import Loader from "./loader/loader";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Modal from "./modal";
+import { requestProvider } from "webln";
 
 export default function Blog(props) {
   const [convertedContent, setConvertedContent] = useState(null);
@@ -18,6 +20,10 @@ export default function Blog(props) {
   const [id, setId] = useState(useParams().id);
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isModal, setIsModal] = useState(true);
+  const [invoice, setInvoice] = useState(
+    "lnbc300n1p3yzrlvpp50klfcv97xfqpwr7pyxh8gds686xgr52fa44c3c4q4nsuzpqgfzyqdqvw35x2grhv9uscqzpgxqyz5vqsp5d33gq5pk966k4l6vzkdp9akgvrtncmd7pmmgntg03f2hfgwl6drs9qyyssqhmvz88jajqxc06caazqxl48aq6cjl9tz3h266vktu2jnk8ecsy2yrha89r7xhurta7al47rgufgshjt24h7w8m9pkxaafa3p3g8qwhgqye8ztm"
+  );
   const navigate = useNavigate();
 
   const fetchArticle = async () => {
@@ -53,9 +59,43 @@ export default function Blog(props) {
       __html: DOMPurify.sanitize(html),
     };
   };
+
+  const makePayment = async () => {
+    try {
+      const webln = await requestProvider();
+      const info = await webln.sendPayment(invoice);
+      console.log(info);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Nav />
+      <Modal
+        isModal={isModal}
+        setIsModal={setIsModal}
+        title="Pay little Satoshi"
+      >
+        <div className="px-8">
+          <p className="text-lg text-app-black text-center">
+            In order to view this article you are required to pay 10 Satoshi to
+            the creator of this article as a means of appreciation to them.
+          </p>
+          <p className="text-lg text-app-black text-center mt-4">
+            This is not enough compensation for the content they've put out, but
+            just a little token to appreciate them
+          </p>
+        </div>
+        <div className="bg-light-purple px-6 py-3 flex justify-end mt-4">
+          <button
+            className="bg-purple text-white px-5 py-3 font-medium rounded-md"
+            onClick={makePayment}
+          >
+            Make Payment Now
+          </button>
+        </div>
+      </Modal>
       {loading ? (
         <div className="flex items-center justify-center h-[80vh]">
           <Loader />
