@@ -158,17 +158,19 @@ export default function Blog(props) {
       ) : (
         <div>
           <div
-            className="h-[23.75rem] mx-24 bg-light-purple rounded-md mt-10"
+            className="h-[23.75rem] mx-4 md:mx-24 bg-light-purple rounded-md mt-10"
             style={{
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundImage: `url(${cover})`,
             }}
           ></div>
-          <div className="mx-48 mt-10">
+          <div className="mx-4 md:mx-48 mt-10">
             <div className="border-b pb-7">
-              <h1 className="font-bold text-app-black text-5xl">{title}</h1>
-              <p className="text-app-black text-lg font-bold mt-5">
+              <h1 className="font-bold text-app-black text-2xl md:text-5xl">
+                {title}
+              </h1>
+              <p className="text-app-black text-base md:text-lg font-bold mt-5">
                 Written by <span className="capitalize">{author}</span>{" "}
                 <span className="font-normal ml-4" style={{ color: "#718096" }}>
                   {dateFormatter(date)}{" "}

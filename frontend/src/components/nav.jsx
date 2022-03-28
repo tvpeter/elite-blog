@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { requestProvider } from "webln";
 import Modal from "./modal";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "./user-info";
@@ -15,13 +14,6 @@ export default function Nav() {
   const navigate = useNavigate();
   const openModal = async () => {
     setModal(true);
-    // try {
-    //   const webln = await requestProvider();
-    //   const info = await webln.getInfo();
-    //   console.log(info);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   const verifyAddress = async (e) => {
@@ -66,7 +58,7 @@ export default function Nav() {
   }, []);
   return (
     <nav
-      className="flex justify-between items-center px-24 py-5"
+      className="flex justify-between items-center px-4 md:px-24 py-5"
       style={{
         backgoundColor: "#EFF0F3",
         boxShadow: "4px 6px 13px rgba(215, 215, 215, 0.25)",
@@ -100,15 +92,15 @@ export default function Nav() {
         </form>
       </Modal>
       <div className="flex items-end">
-        <p className="font-semibold text-4xl text-dark">Elite</p>
-        <p className="font-bold text-lg text-purple">.blog</p>
+        <p className="font-semibold text-2xl md:text-4xl text-dark">Elite</p>
+        <p className="font-bold text-base md:text-lg text-purple">.blog</p>
       </div>
       <div>
         {logged ? (
           <UserInfo />
         ) : (
           <button
-            className="py-3 px-5 bg-purple text-white text-lg font-bold rounded"
+            className="py-3 px-3 md:px-5 bg-purple text-white text-sm md:text-lg font-bold rounded"
             onClick={openModal}
           >
             Login with Lightning Address

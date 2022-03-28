@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function SideBar() {
   return (
     <div
-      className="flex flex-col w-80 h-[92vh] rounded-[1.875rem] pl-[4.3rem] pt-[6.8rem] fixed"
+      className="hidden md:flex flex-col w-80 h-[92vh] rounded-[1.875rem] pl-[4.3rem] pt-[6.8rem] fixed"
       style={{
         background: "linear-gradient(321.69deg, #6246EA 0%, #9C8AF2 100%)",
       }}

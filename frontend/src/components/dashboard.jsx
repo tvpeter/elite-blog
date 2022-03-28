@@ -5,17 +5,20 @@ import CategoryIcon from "../asset/images/category.svg";
 import UserIcon from "../asset/images/user.svg";
 import UserInfo from "./user-info";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "rsuite";
+import MobileNav from "./mobile-nav";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="p-[1.875rem]">
+    <div className="p-4 md:p-[1.875rem]">
       <SideBar />
-      <div className="ml-80 pl-10">
-        <UserInfo />
+      <div className="md:ml-80 md:pl-10">
+        <div className="hidden md:flex justify-end">
+          <UserInfo />
+        </div>
+        <MobileNav />
         <div className="mt-12 mb-7">
           <p className="text-2xl text-app-black">Dashboard</p>
           <p className="text-base text-app-black opacity-40">

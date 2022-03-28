@@ -44,8 +44,8 @@ export default function AllBlogs() {
   return (
     <div>
       <Nav />
-      <div className="mx-24 mb-8">
-        <h1 className="text-app-black text-[3rem] font-bold w-[38.56rem] mt-4">
+      <div className="mx-4 md:mx-24 mb-8">
+        <h1 className="text-app-black text-2xl md:text-[3rem] font-bold mt-4">
           All Articles
         </h1>
         {loading ? (
@@ -53,7 +53,7 @@ export default function AllBlogs() {
             <Loader />
           </div>
         ) : (
-          <div className="grid grid-cols-auto">
+          <div className="flex flex-col justify-center items-center md:grid grid-cols-auto">
             {articles.map((article, index) => (
               <BlogCard article={article} key={index} />
             ))}

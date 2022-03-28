@@ -23,7 +23,7 @@ export default function UserInfo() {
       className="flex justify-end items-center cursor-pointer"
       onClick={() => navigate("/dashboard")}
     >
-      <div className="flex justify-center items-center h-12 w-12 rounded-full bg-purple mr-5">
+      <div className="hidden md:flex justify-center items-center h-12 w-12 rounded-full bg-purple mr-5">
         <p className="text-white text-lg uppercase">{initials(address)}</p>
       </div>
       <div className="flex flex-col">

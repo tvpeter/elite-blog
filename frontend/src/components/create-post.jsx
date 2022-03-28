@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../service";
 import classes from "./button.module.css";
+import MobileNav from "./mobile-nav";
 
 export default function CreatePost() {
   const [editorState, setEditorState] = useState(() =>
@@ -20,6 +21,7 @@ export default function CreatePost() {
   const [coverImage, setCoverImage] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
@@ -74,6 +76,7 @@ export default function CreatePost() {
     form.append("title", title);
     form.append("bodyContent", rawData);
     form.append("author", currentUser);
+    form.append("username", username);
 
     try {
       setLoading(true);
@@ -111,13 +114,17 @@ export default function CreatePost() {
           author={user}
           back={setCurrentStep}
           cover={coverImage}
+          username={username}
         />
       )}
       {currentStep === "create" && (
-        <div className="p-[1.875rem]">
+        <div className="p-4 md:p-[1.875rem]">
           <SideBar />
-          <div className="ml-80 pl-10">
-            <UserInfo />
+          <div className="md:ml-80 md:pl-10">
+            <div className="hidden md:flex justify-end">
+              <UserInfo />
+            </div>
+            <MobileNav />
             <div className="mt-12 mb-11">
               <p className="text-2xl text-app-black">Create Blog</p>
               <p className="text-base text-app-black opacity-40">
@@ -130,9 +137,19 @@ export default function CreatePost() {
                   <label className="text-lg font-medium">Blog Title</label>
                   <input
                     type={"text"}
-                    className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 w-[80%] font-medium`}
+                    className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 md:w-[80%] font-medium`}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="flex flex-col mt-4">
+                  <label className="text-lg font-medium">Username</label>
+                  <input
+                    type={"text"}
+                    className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 md:w-[80%] font-medium`}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
                 </div>
@@ -140,7 +157,7 @@ export default function CreatePost() {
                   <label className="text-lg font-medium">Cover Image</label>
                   <input
                     type={"file"}
-                    className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 w-[80%]`}
+                    className={`border border-app-black text-base p-2 text-app-black rounded-md mb-1 md:w-[80%]`}
                     accept="image/*"
                     onChange={(e) => coverImageHandler(e)}
                   />
@@ -163,7 +180,7 @@ export default function CreatePost() {
                     onEditorStateChange={onEditorStateChange}
                   />
                 </div>
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-end mb-8">
                   <button
                     className={`bg-purple py-3 font-medium border border-purple px-9 text-white rounded-md mr-8 relative ${
                       loading ? classes.button__loading : ""
