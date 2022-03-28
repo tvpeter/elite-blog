@@ -13,7 +13,7 @@ const dbConfig = require('../config/database.config');
 const articleRoute = require('../routes/articles.route');
 const lnurlRoute = require('../routes/lnurl.route');
 const paymentRoute = require('../routes/payment.route');
-
+const userRoute = require('../routes/user.route');
 
 //set db connection
 mongoose.Promise = global.Promise;
@@ -44,6 +44,8 @@ const port = process.env.PORT || 3001;
 app.use('/articles', articleRoute);
 app.use('/lnurl', lnurlRoute);
 app.use('/payment', paymentRoute);
+app.use('/user', userRoute);
+
 
 // Index Route
 app.get('/', (req, res) => {
