@@ -1,28 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let articleSchema = new Schema({
-    title: {
+let paymentSchema = new Schema({
+    articleId: {
         type: String,
         required: true,
         trim: true,
     },
-    bodyContent: {
+    lnAddress: {
         type: String,
         required: true,
         trim: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    author: {
-        type: String,
-        required: true,
-    },
-    username: {
-        type: String,
-        required: true,
     },
     created: {
         type: Date,
@@ -34,11 +22,11 @@ let articleSchema = new Schema({
     },
 },
     {
-        collection: 'articles'
+        collection: 'payments'
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = mongoose.model('articleSchema', articleSchema)
+module.exports = mongoose.model('paymentSchema', paymentSchema)
