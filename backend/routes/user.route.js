@@ -22,7 +22,6 @@ userRoute.route("/articles").get(async (req, res) => {
 userRoute.route("/mypaid/articles").get(async (req, res) => {
   try {
     let paidArticles = [];
-    console.log("My guy");
     const articles = await paymentSchema.find({ lnAddress: req.query.address });
 
     for (let article of articles) {

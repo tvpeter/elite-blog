@@ -14,7 +14,8 @@ export default function MyPaidPosts() {
       const response = await ApiService.get(
         `/user/mypaid/articles?address=${localStorage.getItem("address")}`
       );
-      setArticles(response.data.data);
+      //   setArticles(response.data.data);
+      console.log(response.data.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
