@@ -63,7 +63,6 @@ articleRoute.route("/get-article/:id").get((req, res) => {
       if (data.author === address) {
         return util.sendSuccess(res, 200, data);
       }
-
       //check if user has already paid
       paymentSchema
         .find({ articleId: data._id, lnAddress: address })
@@ -77,7 +76,7 @@ articleRoute.route("/get-article/:id").get((req, res) => {
               //return 402 with invoice
               lnurl
                 .requestInvoice({
-                  lnUrlOrAddress: address,
+                  lnUrlOrAddress: data.author,
                   tokens: 10,
                 })
                 .then((result) => {
