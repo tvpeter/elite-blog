@@ -14,10 +14,10 @@ userRoute.route('/articles').get((req, res) => {
         if (error) {
             return util.sendError(res, 400, error);
         } else {
-                return util.sendSuccess(res, 200, data);
+            return util.sendSuccess(res, 200, data);
         }
     })
-   
+
 });
 
 

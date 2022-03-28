@@ -14,7 +14,14 @@ paymentRoute.route('/register').post((req, res) => {
         if (error) {
             return util.sendError(res, 400, error);
         } else {
-            return util.sendSuccess(res, 201, data);
+            articleSchema.findById(req.body.articleId, (error, resp) => {
+                if (error) {
+                    return util.sendError(res, 400, error);
+                } else {
+                    return util.sendSuccess(res, 201, resp);
+                }
+            })
+
         }
     });
 });
