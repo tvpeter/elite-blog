@@ -14,6 +14,7 @@ const articleRoute = require('../routes/articles.route');
 const lnurlRoute = require('../routes/lnurl.route');
 const paymentRoute = require('../routes/payment.route');
 const userRoute = require('../routes/user.route');
+const dashboardRoute = require('../routes/dashboard.route');
 
 //set db connection
 mongoose.Promise = global.Promise;
@@ -45,6 +46,8 @@ app.use('/articles', articleRoute);
 app.use('/lnurl', lnurlRoute);
 app.use('/payment', paymentRoute);
 app.use('/user', userRoute);
+app.use('/dashboard', dashboardRoute);
+
 
 
 // Index Route
