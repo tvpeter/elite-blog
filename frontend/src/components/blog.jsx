@@ -28,7 +28,9 @@ export default function Blog(props) {
 
   const fetchArticle = async () => {
     try {
-      const response = await ApiService.get(`/articles/get-article/${id}`);
+      const response = await ApiService.get(
+        `/articles/get-article/${id}?address=teebams@getalby.co`
+      );
       setTitle(response.data.data.title);
       setCover(response.data.data.image);
       setAuthor(response.data.data.author);
@@ -47,7 +49,7 @@ export default function Blog(props) {
         });
         navigate("/");
       }
-      console.log(error);
+      console.log(error.response);
     }
   };
 
