@@ -8,6 +8,7 @@ const util = require("../utils/util");
 
 let articleSchema = require("../model/article.model");
 let paymentSchema = require("../model/payments.model");
+let paidArticleSchema = require("../model/paidArticles.model");
 
 dotenv.config();
 const articleRoute = express.Router();
@@ -79,6 +80,12 @@ articleRoute.route("/get-article/:id").get((req, res) => {
                   tokens: 10,
                 })
                 .then((result) => {
+                  const articleData = {
+                      articleId: data._id,
+                      author: data.author,
+                      userLnAddress: address
+                  }
+                  paidArticleSchema.create(articleData)
                   return util.sendSuccess(res, 402, result);
                 })
                 .catch((error) => {
@@ -106,6 +113,46 @@ articleRoute.route("/update-article/:id").put((req, res, next) => {
     }
   );
 });
+
+articleRoute.route("/get-paid-articles").get((req, res) => {
+    const address = req.query.address
+    paidArticleSchema.find({userLnAddress: address},(error, data) => {
+       if(error) {
+           return util.sendError(res, 400, error)
+       } else {
+           return util.sendSuccess(res, 200, data)
+       }
+   }
+   );
+})
+
+articleRoute.route("/get-subscribed-users").get((req, res) => {
+    const address = req.query.address
+    paidArticleSchema.find({author: address}, (error, data) => {
+        if(error) {
+            return util.sendError(res, 400, error)
+        } else {
+            let subscriptionCount = data.length+=1
+            return util.sendSuccess(res, 200, subscriptionCount)
+       }
+    })
+});
+
+
+
+articleRoute.route("/get-subscription-balance").get(async (req, res) => {
+    const address = req.query.address
+    paidArticleSchema.find({author: address}, (error, data) => {
+        if(error) {
+            return util.sendError(res, 400, error)
+        } else {
+            let subscriptionCount = data.length+=1
+            let subscriptionTotal = subscriptionCount * 10
+            return util.sendSuccess(res, 200, subscriptionTotal);
+        }
+    })
+})
+
 
 articleRoute.route("/remove-article/:id").delete((req, res, next) => {
   articleSchema.findByIdAndRemove(req.params.id, (error, data) => {

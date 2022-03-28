@@ -4,10 +4,12 @@ const util = require("../utils/util");
 
 let paymentSchema = require("../model/payments.model");
 let articleSchema = require("../model/article.model");
+let paidArticleSchema = require("../model/paidArticles.model");
 
 const paymentRoute = express.Router();
 
 paymentRoute.route("/register").post((req, res) => {
+  
   paymentSchema.create(req.body, (error, data) => {
     if (error) {
       return util.sendError(res, 400, error);
@@ -16,6 +18,12 @@ paymentRoute.route("/register").post((req, res) => {
         if (error) {
           return util.sendError(res, 400, error);
         } else {
+          let articleData = {
+            articleId: req.body.articleId,
+            author: req.body.lnAddress,
+            userLnAddress: req.query.address
+          }
+          paidArticleSchema.create(articleData)
           return util.sendSuccess(res, 201, resp);
         }
       });
