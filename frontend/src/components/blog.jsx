@@ -31,7 +31,7 @@ export default function Blog(props) {
       );
       setTitle(response.data.data.title);
       setCover(response.data.data.image);
-      setAuthor(response.data.data.author);
+      setAuthor(response.data.data.username);
       setDate(response.data.data.created);
       let tempContent = JSON.parse(response.data.data.bodyContent);
       setConvertedContent(draftToHtml(tempContent));
@@ -74,7 +74,7 @@ export default function Blog(props) {
       const response = await ApiService.post(`/payment/register`, data);
       setTitle(response.data.data.title);
       setCover(response.data.data.image);
-      setAuthor(response.data.data.author);
+      setAuthor(response.data.data.username);
       setDate(response.data.data.created);
       let tempContent = JSON.parse(response.data.data.bodyContent);
       setConvertedContent(draftToHtml(tempContent));

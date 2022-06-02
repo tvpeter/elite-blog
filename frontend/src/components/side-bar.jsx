@@ -35,6 +35,16 @@ export default function SideBar() {
           Your Posts
         </NavLink>
         <NavLink
+          to="/my-paid-posts"
+          className={({ isActive }) =>
+            isActive
+              ? "font-extrabold text-lg text-white mb-9"
+              : "font-medium text-lg text-white mb-9"
+          }
+        >
+          My Paid Post
+        </NavLink>
+        <NavLink
           to="/blog"
           className={({ isActive }) =>
             isActive

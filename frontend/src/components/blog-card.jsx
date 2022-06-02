@@ -42,7 +42,7 @@ export default function BlogCard(props) {
         </div>
         <div className="flex flex-col">
           <p className="text-base font-semibold text-app-black">
-            {props.article.author}
+            {props.article.username}
           </p>
           <p className=" text-sm text-app-black">
             {dateFormatter(props.article.created)}

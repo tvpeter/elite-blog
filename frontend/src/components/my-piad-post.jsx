@@ -6,13 +6,13 @@ import MobileNav from "./mobile-nav";
 import ApiService from "../service";
 import Loader from "./loader/loader";
 
-export default function MyPosts() {
+export default function MyPaidPosts() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const getMyArticles = async () => {
     try {
       const response = await ApiService.get(
-        `/user/articles?address=${localStorage.getItem("address")}`
+        `/user/mypaid/articles?address=${localStorage.getItem("address")}`
       );
       setArticles(response.data.data);
       setLoading(false);
